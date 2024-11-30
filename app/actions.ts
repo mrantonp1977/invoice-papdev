@@ -5,6 +5,9 @@ import { parseWithZod } from "@conform-to/zod";
 import { invoiceSchema, onboardingSchema } from "./utils/zodSchemas";
 import { redirect } from "next/navigation";
 import prisma from "./utils/db";
+import { emailClient } from "./utils/mailtrap";
+import { formatCurrency } from "./utils/formatCurrency";
+
 
 export async function onboardUser(prevState: any, formData: FormData) {
   const session = await requireUser();
@@ -64,6 +67,33 @@ export async function createInvoice(prevState: any, formData: FormData) {
       notes: submission.value.notes,
       userId: session.user?.id,
     }
+  });
+
+  const sender = {
+    email: "hello@demomailtrap.com",
+    name: "Papaioannou Dev",
+  };
+
+  const recipients = [
+    {
+      email: "papaioannoudev@gmail.com",
+    }
+  ];
+
+  emailClient.send({
+    from: sender,
+    to: recipients,
+    template_uuid: "215c4bdd-163e-4d91-acc7-6a6ae8b1cfaf",
+    template_variables: {
+      clientName: submission.value.clientName,
+      invoiceNumber: submission.value.invoiceNumber,
+      invoiceDueDate: new Intl.DateTimeFormat('en-US', {
+        dateStyle: 'long',
+
+      }).format(new Date(submission.value.date)),
+      totalAmount: formatCurrency({ amount: submission.value.total, currency: submission.value.currency as any }),
+      invoiceLink: "Test_InvoiceLink"
+    },
   })
 
   return redirect("/dashboard/invoices");
