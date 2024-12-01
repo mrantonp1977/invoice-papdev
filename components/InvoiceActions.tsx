@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   CheckCircle,
@@ -20,9 +20,10 @@ import { toast } from 'sonner';
 
 interface InvoiceActionsProps {
   id: string;
+  status: string;
 }
 
-export function InvoiceActions({ id }: InvoiceActionsProps) {
+export function InvoiceActions({ id, status }: InvoiceActionsProps) {
   const handleSendReminder = async () => {
     toast.promise(
       fetch(`/api/email/${id}`, {
@@ -63,12 +64,14 @@ export function InvoiceActions({ id }: InvoiceActionsProps) {
           <Mail className="size-4 mr-2 text-yellow-600" />
           Reminder Email
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href={'#'}>
-            <CheckCircle className="size-4 mr-2 text-green-600" />
-            Mark as Paid
-          </Link>
-        </DropdownMenuItem>
+        {status !== 'PAID' && (
+          <DropdownMenuItem asChild>
+            <Link href={`/dashboard/invoices/${id}/paid`}>
+              <CheckCircle className="size-4 mr-2 text-green-600" />
+              Mark as Paid
+            </Link>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem asChild>
           <Link href={`/dashboard/invoices/${id}/delete`}>
             <Trash className="size-4 mr-2 text-red-500" />

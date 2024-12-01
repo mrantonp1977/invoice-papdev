@@ -11,6 +11,7 @@ import prisma from '@/app/utils/db';
 import { requireUser } from '@/app/utils/hooks';
 import { formatCurrency } from '@/app/utils/formatCurrency';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 async function getData(userId: string) {
   const data = await prisma.invoice.findMany({
@@ -61,7 +62,10 @@ export async function InvoiceList() {
               })}
             </TableCell>
             <TableCell>
-              <Badge>{invoice.status}</Badge>
+              <Badge className={cn(
+                invoice.status === 'PENDING' && 'bg-violet-100 text-violet-800',
+                invoice.status === 'PAID' && 'bg-green-100 text-teal-600',
+              )} variant={'outline'}>{invoice.status}</Badge>
             </TableCell>
             <TableCell>
               {new Intl.DateTimeFormat('en-US', {
@@ -69,7 +73,7 @@ export async function InvoiceList() {
               }).format(invoice.createdAt)}
             </TableCell>
             <TableCell className="text-right">
-              <InvoiceActions id={invoice.id}/>
+              <InvoiceActions id={invoice.id} status={invoice.status}/>
             </TableCell>
           </TableRow>
         ))}
