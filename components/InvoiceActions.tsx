@@ -70,7 +70,7 @@ export function InvoiceActions({ id }: InvoiceActionsProps) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={'#'}>
+          <Link href={`/dashboard/invoices/${id}/delete`}>
             <Trash className="size-4 mr-2 text-red-500" />
             Delete Invoice
           </Link>
