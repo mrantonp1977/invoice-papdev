@@ -12,7 +12,7 @@ export const invoiceSchema = z.object({
   total: z.number().min(1, 'Total must be greater than 0'),
   status: z.enum(['PAID', 'PENDING']).default('PENDING'),
   date: z.string().min(1),
-  dueDate: z.number().min(1),
+  dueDate: z.number().min(0),
   fromName: z.string().min(2).max(255),
   fromEmail: z.string().email(),
   fromAddress: z.string().min(2).max(255),
