@@ -49,7 +49,7 @@ export default async function DashboardLayout({
             <div className="h-14 flex items-center border-b px-4 lg:h-[60px] lg:px-6">
               <Link href="/" className="flex items-center gap-2">
                 <Image
-                  src="/logo.svg"
+                  src="/logo.png"
                   alt="Logo"
                   width={85}
                   height={85}
