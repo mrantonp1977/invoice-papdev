@@ -9,8 +9,8 @@ import {
 } from '@/components/ui/card';
 import { PlusIcon } from 'lucide-react';
 import Link from 'next/link';
-
-
+import { Suspense } from 'react';
+import  { Skeleton }  from '@/components/ui/skeleton';
 
 export default function InvoicesRoute() {
   return (
@@ -28,7 +28,13 @@ export default function InvoicesRoute() {
         </div>
       </CardHeader>
       <CardContent>
-        <InvoiceList />
+        <Suspense fallback={
+          <Skeleton 
+            className="w-full h-[500px]"
+          />
+        }>
+          <InvoiceList />
+        </Suspense>
       </CardContent>
     </Card>
   );
