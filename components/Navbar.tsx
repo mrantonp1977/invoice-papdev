@@ -1,9 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/public/logo.png";
-import { buttonVariants } from "./ui/button";
-import ShimmerButton from "./ui/shimmer-button";
-import PulsatingButton from "./ui/pulsating-button";
 import { RainbowButton } from "./ui/rainbow-button";
 
 export function Navbar() {
